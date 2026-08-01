@@ -1,24 +1,26 @@
-interface Env {
+export interface Env {
+  ASSETS: Fetcher;
   TI4ASSETS: R2Bucket;
 }
 
-// Tunnel's public hostname — same Cloudflare Tunnel setup as the deployment plan's §07.
-// Single-level subdomain (not api.ti4.thecastle.dev) so it's covered by the zone's free
+// Tunnel's public hostname — single-level subdomain so it's covered by the zone's free
 // Universal SSL wildcard (*.thecastle.dev) instead of needing a paid multi-level wildcard cert.
 const BOT_ORIGIN = "https://ti4api.thecastle.dev";
 
-export const onRequest: PagesFunction<Env> = async ({ request, env, next }) => {
-  const url = new URL(request.url);
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const url = new URL(request.url);
 
-  if (url.pathname.startsWith("/overlays/")) {
-    return serveOverlay(url, env);
-  }
+    if (url.pathname.startsWith("/overlays/")) {
+      return serveOverlay(url, env);
+    }
 
-  if (url.pathname.startsWith("/api/") || url.pathname.startsWith("/ws")) {
-    return proxyToBot(request, url);
-  }
+    if (url.pathname.startsWith("/api/") || url.pathname.startsWith("/ws")) {
+      return proxyToBot(request, url);
+    }
 
-  return next();
+    return env.ASSETS.fetch(request);
+  },
 };
 
 async function serveOverlay(url: URL, env: Env): Promise<Response> {
