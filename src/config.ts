@@ -1,11 +1,7 @@
 const devConfig = {
   api: {
     mapsUrl: "https://asyncti4.com/maps.json",
-    proxyMapsUrl: "/proxy/maps.json",
-    frogMapUrl:
-      "https://qw2j1lld43.execute-api.us-east-1.amazonaws.com/Production/frog",
     websiteBase: "http://localhost:5173/",
-    discordLoginUrl: "http://localhost:8000/login",
     discordRedirectUri: "http://localhost:5173/login",
     gameDataUrl: "/bot/api/public/game",
     botApiUrl: "/bot/api",
@@ -16,16 +12,12 @@ const devConfig = {
 
 const prodConfig = {
   api: {
-    mapsUrl: "https://asyncti4.com/maps.json",
-    proxyMapsUrl: "/proxy/maps.json",
-    frogMapUrl:
-      "https://qw2j1lld43.execute-api.us-east-1.amazonaws.com/Production/frog",
-    websiteBase: "https://asyncti4.com/",
-    discordLoginUrl: "https://api.asyncti4.com/login",
-    discordRedirectUri: "https://asyncti4.com/login",
-    gameDataUrl: "https://bot.asyncti4.com/api/public/game",
-    botApiUrl: "https://bot.asyncti4.com/api",
-    websocketUrl: "wss://bot.asyncti4.com/ws",
+    mapsUrl: "/api/public/games",
+    websiteBase: "https://ti4.thecastle.dev/",
+    discordRedirectUri: "https://ti4.thecastle.dev/login",
+    gameDataUrl: "/api/public/game",
+    botApiUrl: "/api",
+    websocketUrl: "wss://ti4.thecastle.dev/ws",
   },
 };
 

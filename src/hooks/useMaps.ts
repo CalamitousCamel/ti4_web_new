@@ -6,10 +6,9 @@ type MapSummary = {
 };
 
 export function useMaps() {
-  const apiUrl = import.meta.env.DEV ? config.api.proxyMapsUrl : config.api.mapsUrl;
-
   return useQuery({
     queryKey: ["maps"],
-    queryFn: async () => (await fetch(apiUrl).then((res) => res.json())) as MapSummary[],
+    queryFn: async () =>
+      (await fetch(config.api.mapsUrl).then((res) => res.json())) as MapSummary[],
   });
 }

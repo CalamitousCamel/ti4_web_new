@@ -26,7 +26,6 @@ import {
 } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import LoginPage, { loginLoader } from "./LoginPage";
-import FrogGamePage from "./image-map/pages/FrogGamePage";
 import LandingPage from "./LandingPage";
 import MapTogglePage from "./MapTogglePage";
 import { SystemTilePage } from "./domains/map/components/SystemTilePage/SystemTilePage";
@@ -72,10 +71,6 @@ const router = createBrowserRouter([
     element: <EmbeddedMapPage />,
   },
 
-  {
-    path: "/froggame/:discordid/:mapid",
-    element: <FrogGamePage />,
-  },
   {
     path: "/login",
     element: <LoginPage />,

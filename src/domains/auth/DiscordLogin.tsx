@@ -6,7 +6,7 @@ import { config } from "@/config";
 import cx from "clsx";
 import hud from "@/shared/ui/hudChrome.module.css";
 
-const DISCORD_CLIENT_ID = "1428383113158856724";
+const DISCORD_CLIENT_ID = import.meta.env.VITE_DISCORD_CLIENT_ID;
 
 export const getDiscordOauthUrl = () =>
   `https://discord.com/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&response_type=code&redirect_uri=${encodeURIComponent(config.api.discordRedirectUri)}&scope=identify`;
