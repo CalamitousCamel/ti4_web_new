@@ -1,0 +1,9 @@
+name = "ti4-web-new"
+pages_build_output_dir = "dist"
+compatibility_date = "2024-01-01"
+
+# Configured here instead of the dashboard's Bindings UI, which has open bugs around
+# saving/persisting R2 bindings for Pages projects as of mid-2026.
+[[r2_buckets]]
+binding = "TI4ASSETS"
+bucket_name = "ti4assets"
