@@ -57,7 +57,7 @@ function normalizeRingCount(ringCount: number): number {
 /**
  * Check if fracture is in play by verifying all 7 fracture positions exist
  * @param tilePositions Array of strings in format "position:systemId"
- * @returns true if all fracture positions (frac1-frac7) are present
+ * @returns true if all 7 fracture positions (frac1-frac7) are present
  */
 function isFractureInPlay(tilePositions: string[]): boolean {
   const fracturePositions = ["frac1", "frac2", "frac3", "frac4", "frac5", "frac6", "frac7"];
