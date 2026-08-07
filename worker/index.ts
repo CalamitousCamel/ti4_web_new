@@ -1,11 +1,8 @@
 export interface Env {
   ASSETS: Fetcher;
   TI4ASSETS: R2Bucket;
+  BOT_ORIGIN: string;
 }
-
-// Tunnel's public hostname — single-level subdomain so it's covered by the zone's free
-// Universal SSL wildcard (*.thecastle.dev) instead of needing a paid multi-level wildcard cert.
-const BOT_ORIGIN = "https://ti4api.thecastle.dev";
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
@@ -16,12 +13,14 @@ export default {
     }
 
     if (url.pathname.startsWith("/api/") || url.pathname.startsWith("/ws")) {
-      return proxyToBot(request, url);
+      return proxyToBot(request, url, env);
     }
 
+    // Defensive: anything else that reaches the Worker (it shouldn't, given
+    // run_worker_first in wrangler.jsonc) goes back to assets.
     return env.ASSETS.fetch(request);
   },
-};
+} satisfies ExportedHandler<Env>;
 
 async function serveOverlay(url: URL, env: Env): Promise<Response> {
   // Path (minus the leading slash) is exactly the R2 key AsyncTi4WebsiteHelper.putOverlays
@@ -39,7 +38,7 @@ async function serveOverlay(url: URL, env: Env): Promise<Response> {
   return new Response(object.body, { headers });
 }
 
-async function proxyToBot(request: Request, url: URL): Promise<Response> {
-  const target = new URL(url.pathname + url.search, BOT_ORIGIN);
+async function proxyToBot(request: Request, url: URL, env: Env): Promise<Response> {
+  const target = new URL(url.pathname + url.search, env.BOT_ORIGIN);
   return fetch(new Request(target, request));
 }

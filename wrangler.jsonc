@@ -1,0 +1,30 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "ti4-web-new",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-08-06",
+
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    // Paths here never fall through to the static-asset/SPA-shell handling above —
+    // they always reach the Worker, even though none of them are files in dist/.
+    "run_worker_first": ["/api/*", "/ws*", "/overlays/*"]
+  },
+
+  "routes": [{ "pattern": "ti4.thecastle.dev", "custom_domain": true }],
+
+  "vars": {
+    // Single-level subdomain so it's covered by the zone's free Universal SSL
+    // wildcard (*.thecastle.dev) instead of needing a paid multi-level wildcard cert.
+    "BOT_ORIGIN": "https://ti4api.thecastle.dev"
+  },
+
+  // Configured here instead of the dashboard's Bindings UI, which has open bugs around
+  // saving/persisting R2 bindings for Pages projects as of mid-2026.
+  "r2_buckets": [{ "binding": "TI4ASSETS", "bucket_name": "ti4assets" }],
+
+  "observability": { "enabled": true },
+  "preview_urls": true
+}
